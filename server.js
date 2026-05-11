@@ -19,7 +19,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 app.use('/uploads', express.static(uploadsDir));
 
-app.get('/', (req, res) => res.send('API is running...'));
+app.get('/', (req, res) => res.send('API is running successfully...'));
 
 connectDB();
 
