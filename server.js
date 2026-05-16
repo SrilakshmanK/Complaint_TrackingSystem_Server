@@ -17,12 +17,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+
+
+app.use(express.static(path.join(__dirname,'../public')))
+ 
+// Serving the html file from the /public directory 
+app.get('/', (req,res)=>{
+  res.sendFile(path.join(__dirname,'public','index.html'))
+})
+
+
+
 // Serve uploaded media files
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-app.use('/uploads', express.static(uploadsDir));
 
-app.get('/', (req, res) => res.send('API is running successfully...'));
+app.use('/uploads', express.static(uploadsDir));
 
 connectDB();
 
