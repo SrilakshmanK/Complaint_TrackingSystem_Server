@@ -40,6 +40,7 @@ module.exports.login = async (req, res) => {
       message: 'Login success',
       token,
       role: user.role.role,
+      roleId: user.role._id,
       user: {
         id: user._id,
         name: user.name,

@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 module.exports.profile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password'); // hide password
+    const user = await User.findById(req.user.id).select('-password').populate('role', 'role'); // hide password, populate role name
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     res.json({

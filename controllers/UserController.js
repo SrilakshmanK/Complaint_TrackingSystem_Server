@@ -102,3 +102,28 @@ module.exports.DeleteUser = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 };
+
+// ================== GET USERS BY ROLE ==================
+/**
+ * GET /api/users/by-role?roleId=<id>
+ * Returns staff members under a specific role — used by the admin assign modal
+ * to populate the second (staff-picker) dropdown after a role is selected.
+ */
+module.exports.GetUsersByRole = async (req, res) => {
+  try {
+    const { roleId } = req.query;
+
+    if (!roleId || !mongoose.Types.ObjectId.isValid(roleId)) {
+      return res.status(400).json({ success: false, message: 'Valid roleId query param required' });
+    }
+
+    const users = await User.find({ role: roleId })
+      .select('name gmail phoneNo')
+      .sort({ name: 1 });
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
